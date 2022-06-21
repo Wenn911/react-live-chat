@@ -1,5 +1,5 @@
 start-backend:
-	npx start-server frontend/src/index.js
+	npx start-server
 start-frontend:
 	cd frontend && npm start
 install: 
