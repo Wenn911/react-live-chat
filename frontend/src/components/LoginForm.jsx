@@ -39,22 +39,23 @@ const LoginForm = () => {
     setError(null);
 
     try {
-        const res = await axios.post(url, { ...values }, { timeout: 10000, timeoutErrorMessage: 'NetworkError'});
-        auth.login(res.data);
-        history.push('/');
-    }
-    catch (e) {
-        if (e.isAxiosError && e.response && e.response.status === 401) {
-            setError('authFailed');
-            usernameRef.current.select();
-        } else if (e.isAxiosError && e.message === 'NetworkError') {
-            setError('netError');
-        } else {
-            setError('unknown');
-            console.log(e)
-        }
+      const res = await axios.post(url, { ...values }, { timeout: 10000, timeoutErrorMessage: 'Network Error' });
 
-        setSubmitting(false);
+      auth.logIn(res.data);
+
+      history.push('/');
+    } catch (e) {
+      if (e.isAxiosError && e.response && e.response.status === 401) {
+        setError('invalidLabels');
+        usernameRef.current.select();
+      } else if (e.isAxiosError && e.message === 'Network Error') {
+        setError('networkErr');
+      } else {
+        setError('unknown');
+        console.error(e);
+      }
+
+      setSubmitting(false);
     }
   };
 

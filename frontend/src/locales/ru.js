@@ -15,6 +15,7 @@ export default {
         errors: {
             networkErr: 'Ошибка сети',
             invalidLabels: 'Неверные имя пользователя или пароль',
+            unknown: "Что-то пошло не так, попробуйте снова",
         },
         texts: {
             noAccount: 'Нет аккаунта?',
