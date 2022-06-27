@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../hooks';
+import { useAuth, useSocket } from '../hooks';
 import routes from '../routes';
-
+import { useDispatch } from 'react-redux'
+import { setInitialState } from '../slices/channelsSlice';
+import { Col, Row, Spinner } from 'react-bootstrap';
+import { Channels } from './Channels'
 
 const getToken = () => localStorage.getItem('token');
 
@@ -19,7 +22,10 @@ const getAuthorizationHeader = () => {
 
 const Chat = () => {
     const auth = useAuth();
+    const socket = useSocket()
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    
     const [contentLoaded, setContentLoaded] = useState(false);
 
     useEffect(() => {
@@ -30,8 +36,8 @@ const Chat = () => {
 
             try {
                const res = await axios.get(url, { headers: getAuthorizationHeader() });
-                //dispatch
-                //socket.auth
+                dispatch(setInitialState(res.data));
+                socket.auth = { token: getToken() };
 
                 if (mounted) {
                     setContentLoaded(true);
@@ -51,8 +57,18 @@ const Chat = () => {
       }
     }, [])
     
-  return (
-    <div>Chat</div>
+  return contentLoaded ? (
+    <Row className='flex-grow-1 h-75 pb-3'>
+      <Channels />
+      {/* <Messages />  */}
+    </Row>
+  ) : (
+    <Row className='align-items-center h-100'>
+      <Col className='text-center'>
+        <Spinner animation="grow" variant="primary" />
+        <p>{t('texts.pleasewait')}</p>
+      </Col>
+    </Row>
   )
 }
 

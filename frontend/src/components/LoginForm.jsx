@@ -7,15 +7,16 @@ import routes from '../routes';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import FormContainer from './FormContainer';
 
 const LoginForm = () => {
-    const [error, setError] = useState(null);
     const auth = useAuth();
     const history = useHistory();
     const usernameRef = useRef();
     const { t } = useTranslation();
+
+    const [error, setError] = useState(null);
 
     const redirectAuth = useCallback(
         () => {
@@ -44,6 +45,9 @@ const LoginForm = () => {
       auth.logIn(res.data);
 
       history.push('/');
+      console.log('aaa' ,res.data)
+      console.log('sss', history);
+      console.log('fff', res);
     } catch (e) {
       if (e.isAxiosError && e.response && e.response.status === 401) {
         setError('invalidLabels');
@@ -112,6 +116,8 @@ const LoginForm = () => {
           className="w-100 mb-3"
           disabled={formik.isSubmitting}
         >
+          {formik.isSubmitting
+          && <Spinner className="mr-1" animation="border" size="sm" />}
           {t('buttons.logIn')}
         </Button>
         <div className="text-center">
