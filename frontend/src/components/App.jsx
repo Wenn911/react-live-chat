@@ -7,33 +7,10 @@ import PageNotFound from "./PageNotFound";
 import LoginForm from "./LoginForm";
 import { useAuth } from "../hooks";
 import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
-import { useState } from "react";
-import { authContext, socketContext } from "../contexts/index.js";
+import { socketContext } from "../contexts/index.js";
 import Chat from "./Chat";
+import AuthProvider from "../contexts/AuthProvider";
 
-
-const AuthProvider = ({ children }) => {
-  const userToken = localStorage.getItem('token');
-  const [loggedIn, setLoggedIn] = useState(!!userToken);
-
-  const logIn = ({ token, username }) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    setLoggedIn(true);
-  };
-
-  const logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    setLoggedIn(false);
-  };
-
-  return (
-    <authContext.Provider value={{ loggedIn, logIn, logOut }}>
-      {children}
-    </authContext.Provider>
-  )
-};
 
 const PrivateRoute = ({ children, exact, path }) => {
   const { loggenIn } = useAuth();
