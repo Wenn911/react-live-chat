@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Wenn911/frontend-project-lvl4#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^1.0.0"
+    "@hexlet/chat-server": "^1.1.3"
   }
 }

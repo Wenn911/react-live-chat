@@ -44,9 +44,9 @@ const Channels = () => {
 
     const getButtonVariant = (id) => (id === currentChannelId ? 'primary' : 'light');
 
-    const handleAddChannel = () => {
-        //dispatch(/openModal)
-    };
+    // const handleAddChannel = () => {
+    //     //dispatch(/openModal)
+    // };
 
     const handleClickChannel = (id) => {
         dispatch(setCurrentChannelId({ id }));
@@ -81,4 +81,4 @@ const Channels = () => {
   );
 };
 
-export default Channels
+export default Channels;

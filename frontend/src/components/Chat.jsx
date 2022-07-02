@@ -6,7 +6,7 @@ import routes from '../routes';
 import { useDispatch } from 'react-redux'
 import { setInitialState } from '../slices/channelsSlice';
 import { Col, Row, Spinner } from 'react-bootstrap';
-import { Channels } from './Channels'
+import Channels from './Channels.jsx'
 
 const getToken = () => localStorage.getItem('token');
 
