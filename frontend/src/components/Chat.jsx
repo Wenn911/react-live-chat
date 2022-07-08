@@ -1,75 +1,81 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Spinner } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { useAuth, useSocket } from '../hooks';
-import routes from '../routes';
-import { useDispatch } from 'react-redux'
-import { setInitialState } from '../slices/channelsSlice';
-import { Col, Row, Spinner } from 'react-bootstrap';
-import Channels from './Channels.jsx'
+import axios from 'axios';
+
+import routes from '../routes.js';
+import { setInitialState } from '../slices/channelsInfoSlice.js';
+import { useAuth, useSocket } from '../hooks/';
+import Channels from './Channels';
+import Messages from './Messages';
 
 const getToken = () => localStorage.getItem('token');
 
 const getAuthorizationHeader = () => {
-    const token = getToken();
+  const token = getToken();
 
-    if (token) {
-        return { Authorization: `Bearer: ${token}` };
-    }
+  if (token) {
+    return { Authorization: `Bearer ${token}` };
+  }
 
-    return {};
-}
+  return {};
+};
 
 const Chat = () => {
-    const auth = useAuth();
-    const socket = useSocket()
-    const { t } = useTranslation();
-    const dispatch = useDispatch();
-    
-    const [contentLoaded, setContentLoaded] = useState(false);
+  const auth = useAuth();
+  const dispatch = useDispatch();
+  const socket = useSocket();
+  const { t } = useTranslation();
 
-    useEffect(() => {
-        let mounted = true;
+  const [contentLoaded, setContentLoaded] = useState(false);
 
-        const fetchData = async () => {
-            const url = routes.data();
+  useEffect(() => {
+    let mounted = true;
 
-            try {
-               const res = await axios.get(url, { headers: getAuthorizationHeader() });
-                dispatch(setInitialState(res.data));
-                socket.auth = { token: getToken() };
+    const fetchData = async () => {
+      const url = routes.data();
+      try {
+        const res = await axios.get(url, { headers: getAuthorizationHeader() });
 
-                if (mounted) {
-                    setContentLoaded(true);
-                }
-            } catch (e) {
-                if (e.isAxiosError) {
-                    auth.logOut();
-                    return;
-                }
-                throw e;
-            }
-        };
-        fetchData()
-    
-      return () => {
-        mounted = true;
+        dispatch(setInitialState(res.data));
+
+        socket.auth = { token: getToken() };
+
+        if (mounted) {
+          setContentLoaded(true);
+        }
+      } catch (e) {
+        if (e.isAxiosError) {
+          auth.logOut();
+          return;
+        }
+
+        throw e;
       }
-    }, [])
-    
+    };
+
+    fetchData();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return contentLoaded ? (
-    <Row className='flex-grow-1 h-75 pb-3'>
+    <Row className="flex-grow-1 h-75 pb-3">
       <Channels />
-      {/* <Messages />  */}
+      <Messages />
     </Row>
   ) : (
-    <Row className='align-items-center h-100'>
-      <Col className='text-center'>
+    <Row className="align-items-center h-100">
+      <Col className="text-center">
         <Spinner animation="grow" variant="primary" />
         <p>{t('texts.pleasewait')}</p>
       </Col>
     </Row>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;

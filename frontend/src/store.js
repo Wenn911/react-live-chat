@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import channelsSlice from './slices/channelsSlice.js';
+
+import channelsInfoReducer from './slices/channelsInfoSlice.js';
+import messagesInfoReducer from './slices/messagesInfoSlice.js';
+import modalReducer from './slices/modalSlice.js';
 
 export default configureStore({
-    reducer: {
-        channelsInfo: channelsSlice,
-    },
+  reducer: {
+    channelsInfo: channelsInfoReducer,
+    messagesInfo: messagesInfoReducer,
+    modal: modalReducer,
+  },
 });

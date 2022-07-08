@@ -20,11 +20,11 @@ const LoginForm = () => {
 
     const redirectAuth = useCallback(
         () => {
-        if (auth.loggenIn) {
+        if (auth.loggedIn) {
             history.replace('/');
             }
         },
-        [auth.loggenIn, history],
+        [auth.loggedIn, history],
   );
   
   useEffect(() => {

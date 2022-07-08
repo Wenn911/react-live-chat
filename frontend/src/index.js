@@ -1,12 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './components/App';
+import { createRoot } from 'react-dom/client';
 import './App.scss';
-import './init.js'
+import init from './init';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+// if (process.env.NODE_ENV !== 'production') {
+//   localStorage.debug = 'chat:*';
+// }
+
+const render = async () => {
+  const vdom = await init();
+  const root = createRoot(document.getElementById('root'));
+
+  root.render(vdom);
+};
+
+render();
