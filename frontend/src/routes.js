@@ -1,10 +1,9 @@
-const host = '';
-const prefix = 'api/v1'
+const prefix = '/api/v1'
 
 const routes = {
-    login: () => [host, prefix, 'login'].join('/'),
-    data: () => [host, prefix, 'data'].join('/'),
-    signup: () => [host, prefix, 'signup'].join(),
+    login: () => [prefix, 'login'].join('/'),
+    data: () => [prefix, 'data'].join('/'),
+    signup: () => [prefix, 'signup'].join('/'),
 }
 
 export default routes;
