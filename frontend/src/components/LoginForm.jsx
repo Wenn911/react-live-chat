@@ -45,9 +45,6 @@ const LoginForm = () => {
       auth.logIn(res.data);
 
       history.push('/');
-      console.log('aaa' ,res.data)
-      console.log('sss', history);
-      console.log('fff', res);
     } catch (e) {
       if (e.isAxiosError && e.response && e.response.status === 401) {
         setError('invalidLabels');
@@ -113,7 +110,7 @@ const LoginForm = () => {
         <Button
           type="submit"
           variant="outline-primary"
-          className="w-100 mb-3"
+          className="w-100 mb-3 mt-3"
           disabled={formik.isSubmitting}
         >
           {formik.isSubmitting

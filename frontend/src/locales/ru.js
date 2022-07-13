@@ -20,7 +20,7 @@ export default {
             unknown: "Что-то пошло не так, попробуйте снова",
             notInRange: 'От 3 до 20 символов',
             passwordTooShort: 'Пароль слишком короткий',
-            passwordDontMatch: 'Пароли должны совпадать',
+            passwordsDontMatch: 'Пароли должны совпадать',
             emptyField: 'Заполните это поле',
             userExists: 'Пользователь уже существует'
         },
@@ -29,8 +29,16 @@ export default {
             registration: 'Регистрация',
             pleaseWait: 'Пожалуйста, подождите',
             channels: 'Каналы',
-            addChannel: 'Добавить канал'
-            
+            addChannel: 'Добавить канал',
+            messageCount_zero: 'сообщений',
+            messageCount_one: 'сообщение',
+            messageCount_few: 'сообщения',
+            messageCount_many: 'сообщений',
+        },
+        placeholder: {
+            range: 'От 3 до 20 символов',
+            noShorterThan: 'Не менее 6 символов',
+            passwordMustMatch: 'Подтвердите пароль',
         }
     }
 }

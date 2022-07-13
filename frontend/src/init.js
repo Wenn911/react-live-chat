@@ -10,10 +10,14 @@ import { addMessage } from './slices/messagesInfoSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsInfoSlice.js';
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
+import leoProfanity from "leo-profanity";
 
 const init = async (socketClient = io()) => {
   const i18nInstance = i18n.createInstance();
   const lng = 'ru';
+
+  const ruDict = leoProfanity.getDictionary('ru');
+  leoProfanity.add(ruDict);
 
   await i18nInstance
   .use(initReactI18next)

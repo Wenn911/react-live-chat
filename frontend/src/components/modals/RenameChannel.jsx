@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux'
 import { useSocket } from '../../hooks';
 import { channelSchema } from '../../validations';
+import {toast} from "react-toastify";
+import leoProfanity from "leo-profanity";
 
 const RenameChannelForm = ({ onHide }) => {
     const { channelId, name } = useSelector((state) => state.modal.extra);
@@ -20,8 +22,9 @@ const RenameChannelForm = ({ onHide }) => {
         validationSchema: channelSchema,
         onSubmit: ({ name: newName }, { setSubmitting }) => {
             setSubmitting(true);
+            const filteredName = leoProfanity.clean(newName)
             
-            const channel = { id: channelId, name: newName };
+            const channel = { id: channelId, name: filteredName };
 
             socket.emit('renameChannel', channel, ({ status }) => {
                 if (status === 'ok') {
@@ -74,6 +77,7 @@ const RenameChannel = ({ onExited }) => {
 
     const onHide = () => {
         setShow(false);
+        toast.success(t('channels.renamed'));
     };
 
   return (

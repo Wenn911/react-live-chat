@@ -54,7 +54,7 @@ const SignUp = () => {
 
     const redirectAuth = useCallback(
         () => {
-            if ( auth.loggedIn) {
+            if (auth.loggedIn) {
                 history.replace('/');
             }
         },
@@ -114,6 +114,7 @@ const SignUp = () => {
                   type='password'
                   required
                   placeholder={t('placeholder.passwordMustMatch')}
+                  className="mb-3"
                   onChange={formik.handleChange}
                   value={formik.values.confirmPassword}
                   isInvalid={formik.errors.confirmPassword || signUpError}
@@ -126,7 +127,7 @@ const SignUp = () => {
             </FormGroup>
             <Button
                 type='submit'
-                className='w-100'
+                className='w-100 mt-3'
                 variant='outline-primary'
                 disabled={formik.isSubmitting}
             >{formik.isSubmitting && <Spinner className='mr-1' animation='border' size='sm' />}{t('buttons.signUp')}</Button>

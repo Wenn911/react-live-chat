@@ -12,6 +12,8 @@ import LoginForm from './LoginForm.jsx';
 import PageNotFound from './PageNotFound.jsx';
 import { useAuth } from '../hooks/';
 import SignUp from './SignUp';
+import AppNavbar from "./AppNavbar";
+import { ToastContainer as Toaster } from "react-toastify";
 
 
 const PrivateRoute = ({ children, exact, path }) => {
@@ -31,6 +33,7 @@ const App = ({ socket }) => {
       <socketContext.Provider value={socket}>
         <Router>
           <div className="d-flex flex-column h-100">
+            <AppNavbar />
             <Switch>
               <PrivateRoute exact path="/">
                 <Chat />
@@ -46,6 +49,7 @@ const App = ({ socket }) => {
               </Route>
             </Switch>
           </div>
+          <Toaster />
         </Router>
       </socketContext.Provider>
     </AuthProvider>

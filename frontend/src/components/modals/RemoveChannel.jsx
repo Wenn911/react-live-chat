@@ -3,6 +3,7 @@ import { Button, Modal, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useSocket } from '../../hooks';
+import {toast} from "react-toastify";
 
 const RemoveChannel = ({ onExited }) => {
     const [show, setShow] = useState(true);
@@ -13,6 +14,7 @@ const RemoveChannel = ({ onExited }) => {
 
     const onHide = () => {
         setShow(false);
+        toast.success(t('channels.removed'));
     };
 
     const handleRemoveChannel = () => {

@@ -10,6 +10,7 @@ import { setInitialState } from '../slices/channelsInfoSlice.js';
 import { useAuth, useSocket } from '../hooks/';
 import Channels from './Channels';
 import Messages from './Messages';
+import {toast} from "react-toastify";
 
 const getToken = () => localStorage.getItem('token');
 
@@ -51,6 +52,11 @@ const Chat = () => {
           auth.logOut();
           return;
         }
+        if (!e.isAxiosError) {
+          toast.error(t('errors.unknown'))
+        } else {
+          toast.error(t('errors.networkErr'))
+        }
 
         throw e;
       }
@@ -64,15 +70,17 @@ const Chat = () => {
   }, []);
 
   return contentLoaded ? (
-    <Row className="flex-grow-1 h-75 pb-3">
-      <Channels />
-      <Messages />
-    </Row>
+    <div className="container h-100 my-4 overflow-hidden rounded shadow">
+      <Row className="h-100 bg-white flex-md-row">
+        <Channels />
+        <Messages />
+      </Row>
+    </div>
   ) : (
     <Row className="align-items-center h-100">
       <Col className="text-center">
         <Spinner animation="grow" variant="primary" />
-        <p>{t('texts.pleasewait')}</p>
+        <p>{t('texts.pleaseWait')}</p>
       </Col>
     </Row>
   );
