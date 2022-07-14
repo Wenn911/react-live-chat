@@ -14,6 +14,19 @@ import { useAuth } from '../hooks/';
 import SignUp from './SignUp';
 import AppNavbar from "./AppNavbar";
 import { ToastContainer as Toaster } from "react-toastify";
+import getModal from './modals/index';
+import {useDispatch, useSelector} from "react-redux";
+import {closeModal} from "../slices/modalSlice";
+
+const renderModal = (type, onExited) => {
+  if (!type) {
+    return null;
+  }
+
+  const Modal = getModal(type);
+
+  return <Modal onExited={onExited} />;
+};
 
 
 const PrivateRoute = ({ children, exact, path }) => {
@@ -27,6 +40,12 @@ const PrivateRoute = ({ children, exact, path }) => {
 };
 
 const App = ({ socket }) => {
+  const { type } = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
+
+  const onModalExited = () => {
+    dispatch(closeModal());
+  }
 
   return (
     <AuthProvider>
@@ -49,7 +68,17 @@ const App = ({ socket }) => {
               </Route>
             </Switch>
           </div>
-          <Toaster />
+          {renderModal(type, onModalExited)}
+          <Toaster
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover/>
         </Router>
       </socketContext.Provider>
     </AuthProvider>

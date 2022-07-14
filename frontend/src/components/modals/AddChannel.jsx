@@ -32,6 +32,7 @@ const AddChannelForm = ({ onHide }) => {
 
             socket.emit('newChannel', channel, ({ status }) => {
                 if (status === 'ok') {
+                    toast.success(t('channels.created'));
                     onHide();
                 }
             });
@@ -84,7 +85,6 @@ const AddChannel = ({ onExited }) => {
 
     const onHide = () => {
         setShow(false);
-        toast.success(t('channels.created'));
     };
 
     const { t } = useTranslation();

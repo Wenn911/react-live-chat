@@ -19,7 +19,7 @@ const IrremovableChannel = ({ name, buttonVariant, onClick }) => (
     className="w-100 rounded-0 text-start"
     onClick={onClick}
   >
-    {name}
+    {`# ${name}`}
   </Nav.Link>
 );
 
@@ -31,19 +31,19 @@ const RemovableChannel = ({
   onRename,
   t,
 }) => (
-  <Dropdown as={ButtonGroup} className="d-flex mb-2">
+  <Dropdown as={ButtonGroup} className="d-flex">
     <Nav.Link
       as={Button}
       variant={buttonVariant}
       onClick={onClick}
-      className="text-left flex-grow-1"
+      className="text-start flex-grow-1"
     >
-      {name}
+      {`# ${name}`}
     </Nav.Link>
     <Dropdown.Toggle
       split
       variant={buttonVariant}
-      className="flex-grow-0"
+      className="flex-grow-0 dropdown-toggle-split btn"
       data-testid="channel-dropdown"
     />
     <Dropdown.Menu data-testid="channel-dropdown-menu">
@@ -80,11 +80,11 @@ const Channels = () => {
   };
 
   const renderChannels = () => (
-    <Nav variant="pills" fill className="flex-column">
+    <Nav className="nav flex-column nav-pills nav-fill px-2">
       {channels.map(({ id, name, removable }) => {
         const Channel = removable ? RemovableChannel : IrremovableChannel;
         return (
-          <Nav.Item key={id}>
+          <Nav.Item key={id} className="w-100">
             <Channel
               name={name}
               buttonVariant={getButtonVariant(id)}

@@ -9,6 +9,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import FormContainer from './FormContainer';
+import {toast} from "react-toastify";
 
 const LoginForm = () => {
     const auth = useAuth();
@@ -51,9 +52,11 @@ const LoginForm = () => {
         usernameRef.current.select();
       } else if (e.isAxiosError && e.message === 'Network Error') {
         setError('networkErr');
+        toast.error(t('errors.networkErr'))
       } else {
         setError('unknown');
         console.error(e);
+        toast.error(t('errors.unknown'))
       }
 
       setSubmitting(false);

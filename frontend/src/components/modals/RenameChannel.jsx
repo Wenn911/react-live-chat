@@ -28,6 +28,7 @@ const RenameChannelForm = ({ onHide }) => {
 
             socket.emit('renameChannel', channel, ({ status }) => {
                 if (status === 'ok') {
+                    toast.success(t('channels.renamed'));
                     onHide();
                 }
             });
@@ -77,7 +78,6 @@ const RenameChannel = ({ onExited }) => {
 
     const onHide = () => {
         setShow(false);
-        toast.success(t('channels.renamed'));
     };
 
   return (

@@ -13,6 +13,9 @@ export default {
             logOut: 'Выйти',
             send: 'Отправить',
             add: 'Добавить',
+            rename: 'Переименовать',
+            remove: 'Удалить',
+            cancel: 'Отменить',
         },
         errors: {
             networkErr: 'Ошибка сети',
@@ -34,11 +37,19 @@ export default {
             messageCount_one: 'сообщение',
             messageCount_few: 'сообщения',
             messageCount_many: 'сообщений',
+            areYouSure: 'Уверены?',
+            removeChannel: 'Удалить канал',
+            renameChannel: 'Переименовать канал',
         },
         placeholder: {
             range: 'От 3 до 20 символов',
             noShorterThan: 'Не менее 6 символов',
             passwordMustMatch: 'Подтвердите пароль',
+        },
+        channels: {
+            created: 'Канал создан!',
+            removed: 'Канал удален',
+            renamed: 'Канал переименован',
         }
     }
 }

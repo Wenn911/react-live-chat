@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
-import { Button, Modal, Spinner } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Modal, Button, Spinner } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+
 import { useSocket } from '../../hooks';
 import {toast} from "react-toastify";
 
 const RemoveChannel = ({ onExited }) => {
     const [show, setShow] = useState(true);
-    const [pending, setPending] = useState(true);
+    const [pending, setPending] = useState(false);
     const { t } = useTranslation();
     const { channelId } = useSelector((state) => state.modal.extra);
     const socket = useSocket();
 
     const onHide = () => {
         setShow(false);
-        toast.success(t('channels.removed'));
     };
 
     const handleRemoveChannel = () => {
@@ -24,6 +24,7 @@ const RemoveChannel = ({ onExited }) => {
 
         socket.emit('removeChannel', channel, ({ status }) => {
             if (status === 'ok') {
+                toast.success(t('channels.removed'));
                 onHide();
             }
         });
@@ -38,23 +39,29 @@ const RemoveChannel = ({ onExited }) => {
             <Modal.Footer>
                 <div>
                     <Button
-                      type='button'
-                      variant='secondary'
-                      className='mr-2'
-                      onClick={onHide}
-                      disabled={pending}
-                      >{t('buttons.cancel')}</Button>
-                      <Button
-                        type='button'
-                        variant='danger'
-                        data-testid='remove-channel'
+                        type="button"
+                        variant="secondary"
+                        className="mr-2"
+                        onClick={onHide}
+                        disabled={pending}
+                    >
+                        {t('buttons.cancel')}
+                    </Button>
+                    <Button
+                        type="button"
+                        variant="danger"
+                        data-testid="remove-button"
                         disabled={pending}
                         onClick={handleRemoveChannel}
-                        >{pending && <Spinner className='mr-1' animation='border' size='sm' />}{t('buttons.remove')}</Button>
+                    >
+                        {pending
+                            && <Spinner className="mr-1" animation="border" size="sm" />}
+                        {t('buttons.remove')}
+                    </Button>
                 </div>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default RemoveChannel 
+export default RemoveChannel;
