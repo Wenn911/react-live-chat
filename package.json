@@ -1,13 +1,13 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "Final fronted project",
-  "main": "frontend/src/index.js",
+  "description": "Final frontend project",
+  "main": "index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
-    "start": "start-server -s ./frontend/start",
+    "start": "start-server -s ./frontend/build",
     "postinstalls": "cd frontend && npm ci",
-    "server": "start-server -a localhost"
+    "server": "start-server"
   },
   "repository": {
     "type": "git",
