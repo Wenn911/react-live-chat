@@ -18,7 +18,7 @@ export default {
             cancel: 'Отменить',
         },
         errors: {
-            networkErr: 'Ошибка сети',
+            networkErr: 'Ошибка соединения',
             invalidLabels: 'Неверные имя пользователя или пароль',
             unknown: "Что-то пошло не так, попробуйте снова",
             notInRange: 'От 3 до 20 символов',
@@ -50,6 +50,9 @@ export default {
             created: 'Канал создан!',
             removed: 'Канал удален',
             renamed: 'Канал переименован',
+        },
+        navbar: {
+            title: 'Hexlet Chat',
         }
     }
 }

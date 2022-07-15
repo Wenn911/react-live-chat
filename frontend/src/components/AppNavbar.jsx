@@ -39,7 +39,7 @@ const AppNavbar = () => {
     return (
         <Navbar className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
             <div className="container">
-                <Navbar.Brand as={Link} to='/'>WennChat</Navbar.Brand>
+                <Navbar.Brand as={Link} to='/'>{t('navbar.title')}</Navbar.Brand>
                 <Button type="button" className="btn btn-primary" onClick={auth.logOut}>{t('buttons.logOut')}</Button>
             </div>
         </Navbar>

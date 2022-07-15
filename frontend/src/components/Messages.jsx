@@ -16,26 +16,6 @@ import leoProfanity from "leo-profanity";
 
 const getUsername = () => localStorage.getItem('username');
 
-const InfoDivBlock = () => {
-  const { channels, currentChannelId } = useSelector((state) => state.channelsInfo);
-  const { messages } = useSelector((state) => state.messagesInfo);
-  const channel = channels.find((ch) => ch.id === currentChannelId);
-  const { t } = useTranslation();
-
-  return (
-      <div className="bg-light mb-4 p-3 shadow-sm small">
-        <p className="m-0">
-          <b>
-            {`# ${channel?.name}`}
-          </b>
-        </p>
-        <span className="text-muted">
-          {`${messages.length} ${t('texts.messageCount', { count: messages.length })}`}
-        </span>
-      </div>
-  )
-}
-
 const MessagesBox = () => {
   const { currentChannelId } = useSelector((state) => state.channelsInfo);
   const { messages } = useSelector((state) => state.messagesInfo);
@@ -123,14 +103,30 @@ const NewMessageForm = () => {
   );
 };
 
-const Messages = () => (
-  <Col className="p-0 h-100">
+const Messages = () => {
+const { channels, currentChannelId } = useSelector((state) => state.channelsInfo);
+const { messages } = useSelector((state) => state.messagesInfo);
+const channel = channels.find((ch) => ch.id === currentChannelId);
+const { t } = useTranslation();
+
+    return (
+        <Col className="p-0 h-100">
     <div className="d-flex flex-column h-100">
-      <InfoDivBlock />
+      <div className="bg-light mb-4 p-3 shadow-sm small">
+        <p className="m-0">
+          <b>
+            {`# ${channel?.name}`}
+          </b>
+        </p>
+        <span className="text-muted">
+          {`${messages.length} ${t('chat.messageCount', { count: messages.length })}`}
+        </span>
+      </div>
       <MessagesBox />
       <NewMessageForm />
     </div>
   </Col>
-);
+)
+};
 
 export default Messages;
