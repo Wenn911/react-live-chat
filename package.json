@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Final frontend project",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "build": "npm run build --prefix frontend",
     "start": "start-server -s ./frontend/build",
