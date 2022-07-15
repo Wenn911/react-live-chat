@@ -4,7 +4,10 @@
   "description": "Final fronted project",
   "main": "frontend/src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build --prefix frontend",
+    "start": "start-server -s ./frontend/build",
+    "postinstalls": "cd frontend && npm ci",
+    "server": "start-server -a localhost"
   },
   "repository": {
     "type": "git",
