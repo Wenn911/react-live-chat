@@ -5,7 +5,7 @@
   "main": "frontend/src/index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",
-    "start": "start-server -s ./frontend/build",
+    "start": "start-server -s ./frontend/start",
     "postinstalls": "cd frontend && npm ci",
     "server": "start-server -a localhost"
   },
