@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { useSocket } from '../../hooks';
 import {toast} from "react-toastify";
+import {useRollbar} from "@rollbar/react";
 
 const RemoveChannel = ({ onExited }) => {
     const [show, setShow] = useState(true);
@@ -12,6 +13,7 @@ const RemoveChannel = ({ onExited }) => {
     const { t } = useTranslation();
     const { channelId } = useSelector((state) => state.modal.extra);
     const socket = useSocket();
+    const rollbar = useRollbar();
 
     const onHide = () => {
         setShow(false);
@@ -26,6 +28,9 @@ const RemoveChannel = ({ onExited }) => {
             if (status === 'ok') {
                 toast.success(t('channels.removed'));
                 onHide();
+            }
+            else {
+                rollbar.error(Error);
             }
         });
     };

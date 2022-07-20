@@ -7,11 +7,13 @@ import { useSocket } from '../../hooks';
 import { channelSchema } from '../../validations';
 import {toast} from "react-toastify";
 import leoProfanity from "leo-profanity";
+import {useRollbar} from "@rollbar/react";
 
 const RenameChannelForm = ({ onHide }) => {
     const { channelId, name } = useSelector((state) => state.modal.extra);
     const { t } = useTranslation();
     const socket = useSocket();
+    const rollbar = useRollbar();
 
     const nameRef = useRef();
 
@@ -30,6 +32,9 @@ const RenameChannelForm = ({ onHide }) => {
                 if (status === 'ok') {
                     toast.success(t('channels.renamed'));
                     onHide();
+                }
+                else {
+                    rollbar.error(Error);
                 }
             });
         },

@@ -8,6 +8,7 @@ import { useAuth } from '../hooks';
 import routes from '../routes';
 import { signUpSchema } from '../validations';
 import FormContainer from './FormContainer';
+import {useRollbar} from "@rollbar/react";
 
 const SignUp = () => {
     const [signUpError, setSignUpError] = useState(null);
@@ -15,6 +16,7 @@ const SignUp = () => {
     const { t } = useTranslation();
     const usernameRef = useRef();
     const history = useHistory();
+    const rollbar = useRollbar();
 
     const formik = useFormik({
         initialValues: {
@@ -38,6 +40,7 @@ const SignUp = () => {
 
                 history.push('/');
             } catch (e) {
+                rollbar.error(e);
                 if (e.isAxiosError && e.response && e.response.status === 409) {
                     setSignUpError('userExists');
                     usernameRef.current.select();

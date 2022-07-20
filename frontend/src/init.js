@@ -11,10 +11,13 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsInfoS
 import { Provider } from 'react-redux';
 import App from './components/App.jsx';
 import leoProfanity from "leo-profanity";
+import Rollbar from "rollbar";
+import { Provider as ProviderRollbar } from '@rollbar/react';
 
 const init = async (socketClient = io()) => {
   const i18nInstance = i18n.createInstance();
   const lng = 'ru';
+  const isProduction = process.env.NODE_ENV === 'production';
 
   const ruDict = leoProfanity.getDictionary('ru');
   leoProfanity.add(ruDict);
@@ -44,10 +47,21 @@ const init = async (socketClient = io()) => {
     store.dispatch(renameChannel({ id, name }));
   });
 
+  const rollbarConfig = {
+      enabled: isProduction,
+      accessToken: process.env.ROLLBAR_TOKEN,
+      captureUncaught: true,
+      captureUnhandledRejections: true,
+    };
+
+  const rollbar = new Rollbar(rollbarConfig);
+
   return (
+      <ProviderRollbar instance={rollbar}>
     <Provider store={store}>
       <App socket={socket} />
     </Provider>
+      </ProviderRollbar>
   )
 }
 

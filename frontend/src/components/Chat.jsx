@@ -11,6 +11,7 @@ import { useAuth, useSocket } from '../hooks/';
 import Channels from './Channels';
 import Messages from './Messages';
 import {toast} from "react-toastify";
+import {useRollbar} from "@rollbar/react";
 
 const getToken = () => localStorage.getItem('token');
 
@@ -29,6 +30,7 @@ const Chat = () => {
   const dispatch = useDispatch();
   const socket = useSocket();
   const { t } = useTranslation();
+  const rollbar = useRollbar();
 
   const [contentLoaded, setContentLoaded] = useState(false);
 
@@ -48,6 +50,7 @@ const Chat = () => {
           setContentLoaded(true);
         }
       } catch (e) {
+        rollbar.error(e);
         if (e.isAxiosError) {
           auth.logOut();
           return;

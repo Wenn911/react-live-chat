@@ -12,8 +12,10 @@ import { useSocket } from '../../hooks';
 import { channelSchema } from '../../validations.js';
 import {toast} from "react-toastify";
 import leoProfanity from 'leo-profanity'
+import {useRollbar} from "@rollbar/react";
 
 const AddChannelForm = ({ onHide }) => {
+    const rollbar = useRollbar();
     const { t } = useTranslation();
     const socket = useSocket();
 
@@ -34,6 +36,9 @@ const AddChannelForm = ({ onHide }) => {
                 if (status === 'ok') {
                     toast.success(t('channels.created'));
                     onHide();
+                }
+                else {
+                    rollbar.error(Error);
                 }
             });
         },

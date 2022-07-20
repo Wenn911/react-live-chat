@@ -13,8 +13,30 @@ import { useFormik } from 'formik';
 import { useSocket } from "../hooks";
 import { messageSchema } from '../validations.js';
 import leoProfanity from "leo-profanity";
+import {useRollbar} from "@rollbar/react";
 
 const getUsername = () => localStorage.getItem('username');
+
+const InfoDivBlock = () => {
+  const { channels, currentChannelId } = useSelector((state) => state.channelsInfo);
+  const { messages } = useSelector((state) => state.messagesInfo);
+  const channel = channels.find((ch) => ch.id === currentChannelId);
+  const message = messages.filter((m) => m.channelId === currentChannelId);
+  const { t } = useTranslation();
+
+  return (
+      <div className="bg-light mb-4 p-3 shadow-sm small">
+        <p className="m-0">
+          <b>
+            {`# ${channel?.name}`}
+          </b>
+        </p>
+        <span className="text-muted">
+          {`${message.length} ${t('texts.messageCount', { count: message.length })}`}
+        </span>
+      </div>
+  )
+}
 
 const MessagesBox = () => {
   const { currentChannelId } = useSelector((state) => state.channelsInfo);
@@ -42,6 +64,7 @@ const NewMessageForm = () => {
   const { currentChannelId } = useSelector((state) => state.channelsInfo);
   const inputRef = useRef();
   const socket = useSocket();
+  const rollbar = useRollbar();
 
   const formik = useFormik({
     initialValues: {
@@ -59,6 +82,9 @@ const NewMessageForm = () => {
 
           resetForm();
           inputRef.current.focus();
+        }
+        else {
+          rollbar.error(Error);
         }
       });
     },
@@ -103,30 +129,14 @@ const NewMessageForm = () => {
   );
 };
 
-const Messages = () => {
-const { channels, currentChannelId } = useSelector((state) => state.channelsInfo);
-const { messages } = useSelector((state) => state.messagesInfo);
-const channel = channels.find((ch) => ch.id === currentChannelId);
-const { t } = useTranslation();
-
-    return (
-        <Col className="p-0 h-100">
+const Messages = () => (
+  <Col className="p-0 h-100">
     <div className="d-flex flex-column h-100">
-      <div className="bg-light mb-4 p-3 shadow-sm small">
-        <p className="m-0">
-          <b>
-            {`# ${channel?.name}`}
-          </b>
-        </p>
-        <span className="text-muted">
-          {`${messages.length} ${t('chat.messageCount', { count: messages.length })}`}
-        </span>
-      </div>
+      <InfoDivBlock />
       <MessagesBox />
       <NewMessageForm />
     </div>
   </Col>
-)
-};
+);
 
 export default Messages;
