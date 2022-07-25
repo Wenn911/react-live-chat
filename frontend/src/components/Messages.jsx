@@ -13,7 +13,6 @@ import { useFormik } from 'formik';
 import { useSocket } from "../hooks";
 import { messageSchema } from '../validations.js';
 import leoProfanity from "leo-profanity";
-import {useRollbar} from "@rollbar/react";
 
 const getUsername = () => localStorage.getItem('username');
 
@@ -64,7 +63,6 @@ const NewMessageForm = () => {
   const { currentChannelId } = useSelector((state) => state.channelsInfo);
   const inputRef = useRef();
   const socket = useSocket();
-  const rollbar = useRollbar();
 
   const formik = useFormik({
     initialValues: {
@@ -82,9 +80,6 @@ const NewMessageForm = () => {
 
           resetForm();
           inputRef.current.focus();
-        }
-        else {
-          rollbar.error(Error);
         }
       });
     },
