@@ -7,7 +7,6 @@ import { useSocket } from '../../hooks';
 import { channelSchema } from '../../validations';
 import {toast} from "react-toastify";
 import leoProfanity from "leo-profanity";
-import {useRollbar} from "@rollbar/react";
 
 const RenameChannelForm = ({ onHide }) => {
     const { channelId, name } = useSelector((state) => state.modal.extra);
