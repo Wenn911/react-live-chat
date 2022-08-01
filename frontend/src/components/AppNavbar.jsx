@@ -4,7 +4,10 @@ import {Navbar, Button} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {useAuth} from "../hooks";
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 12184e1 (refact)
 const AppNavbar = () => {
     const auth = useAuth()
     const { t } = useTranslation();
