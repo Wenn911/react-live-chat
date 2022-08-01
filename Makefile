@@ -10,4 +10,4 @@ start:
 deploy:
 	git push heroku main
 install:
-	make -C code install
+	make -C frontend install
