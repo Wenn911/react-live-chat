@@ -11,6 +11,5 @@ deploy:
 	git push heroku main
 install:
 	npm ci
-	make -C frontend install
 build:
-	make -C frontend build
+	make -C frontend	 build
