@@ -12,4 +12,4 @@ deploy:
 install:
 	npm ci
 build:
-	make -C frontend	 build
+	make -C frontend build
