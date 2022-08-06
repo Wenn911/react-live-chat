@@ -51,6 +51,7 @@ export default {
             created: 'Канал создан!',
             removed: 'Канал удален',
             renamed: 'Канал переименован',
+            menu: 'Управление каналом'
         },
         navbar: {
             title: 'Hexlet Chat',
