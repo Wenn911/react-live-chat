@@ -22,7 +22,7 @@ export default {
             invalidLabels: 'Неверные имя пользователя или пароль',
             unknown: "Что-то пошло не так, попробуйте снова",
             notInRange: 'От 3 до 20 символов',
-            passwordTooShort: 'Пароль слишком короткий',
+            passwordTooShort: 'Не менее 6 символов',
             passwordsDontMatch: 'Пароли должны совпадать',
             emptyField: 'Заполните это поле',
             userExists: 'Пользователь уже существует'
