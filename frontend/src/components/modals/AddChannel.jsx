@@ -56,7 +56,9 @@ const AddChannelForm = ({ onHide }) => {
                     isInvalid={formik.errors.name}
                     readOnly={formik.isSubmitting}
                     ref={nameRef}
+                    id='name'
                 />
+                <label className="visually-hidden" htmlFor="name">{t('texts.channelName')}</label>
                 {formik.errors.name
                     && <Form.Control.Feedback type="invalid">{t(formik.errors.name)}</Form.Control.Feedback>}
             </Form.Group>

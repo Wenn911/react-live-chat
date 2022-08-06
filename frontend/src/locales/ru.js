@@ -40,6 +40,7 @@ export default {
             areYouSure: 'Уверены?',
             removeChannel: 'Удалить канал',
             renameChannel: 'Переименовать канал',
+            channelName: 'Имя канала',
         },
         placeholder: {
             range: 'От 3 до 20 символов',
