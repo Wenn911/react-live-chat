@@ -48,8 +48,8 @@ export default {
             passwordMustMatch: 'Подтвердите пароль',
         },
         channels: {
-            created: 'Канал создан!',
-            removed: 'Канал удален',
+            created: 'Канал создан',
+            removed: 'Канал удалён',
             renamed: 'Канал переименован',
             menu: 'Управление каналом'
         },
