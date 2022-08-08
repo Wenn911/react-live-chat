@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
@@ -33,6 +33,7 @@ function Chat() {
   const [contentLoaded, setContentLoaded] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line
     let mounted = true;
 
     const fetchData = async () => {

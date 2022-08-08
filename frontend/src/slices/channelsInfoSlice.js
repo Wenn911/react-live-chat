@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import _ from 'lodash';
 import { createSlice } from '@reduxjs/toolkit';
 
