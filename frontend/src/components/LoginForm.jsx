@@ -1,33 +1,35 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useAuth } from '../hooks';
 import { useHistory, Link } from 'react-router-dom';
-import routes from '../routes';
 import axios from 'axios';
 
 import { useTranslation } from 'react-i18next';
 import { Button, Form, Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import FormContainer from './FormContainer';
-import {toast} from "react-toastify";
+import routes from '../routes';
+import { useAuth } from '../hooks';
 
-const LoginForm = () => {
-    const auth = useAuth();
-    const history = useHistory();
-    const usernameRef = useRef();
-    const { t } = useTranslation();
+function LoginForm() {
+  const auth = useAuth();
+  const history = useHistory();
+  const usernameRef = useRef();
+  const { t } = useTranslation();
 
-    const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
-    const redirectAuth = useCallback(
-        () => {
-        if (auth.loggedIn) {
-            history.replace('/');
-            }
-        },
-        [auth.loggedIn, history],
+  const redirectAuth = useCallback(
+    () => {
+      if (auth.loggedIn) {
+        history.replace('/');
+      }
+    },
+    [auth.loggedIn, history],
   );
-  
+
   useEffect(() => {
     redirectAuth();
     usernameRef.current.focus();
@@ -52,30 +54,30 @@ const LoginForm = () => {
         usernameRef.current.select();
       } else if (e.isAxiosError && e.message === 'Network Error') {
         setError('networkErr');
-        toast.error(t('errors.networkErr'))
+        toast.error(t('errors.networkErr'));
       } else {
         setError('unknown');
         console.error(e);
-        toast.error(t('errors.unknown'))
+        toast.error(t('errors.unknown'));
       }
 
       setSubmitting(false);
     }
   };
 
-    const loginSchema = Yup.object().shape({
-        username: Yup.string().trim().required('Required'),
-        password: Yup.string().required('Required')
-    });
+  const loginSchema = Yup.object().shape({
+    username: Yup.string().trim().required('Required'),
+    password: Yup.string().required('Required'),
+  });
 
-    const formik = useFormik({
-        initialValues: {
-            username: '', 
-            password: ''
-        },
-        validationSchema: loginSchema,
-        onSubmit: handleSubmit
-    })
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    validationSchema: loginSchema,
+    onSubmit: handleSubmit,
+  });
   return (
     <FormContainer>
       <Form data-testid="login-form" className="p-3" onSubmit={formik.handleSubmit}>
@@ -129,7 +131,7 @@ const LoginForm = () => {
         </div>
       </Form>
     </FormContainer>
-  )
+  );
 }
 
-export default LoginForm
+export default LoginForm;

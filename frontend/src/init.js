@@ -1,16 +1,16 @@
 // @ts-check
 import 'core-js/stable/index.js';
 
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import resources from './locales/resources.js'
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
 import { io } from 'socket.io-client';
+import { Provider } from 'react-redux';
+import leoProfanity from 'leo-profanity';
+import resources from './locales/resources.js';
 import store from './store.js';
 import { addMessage } from './slices/messagesInfoSlice.js';
 import { addChannel, removeChannel, renameChannel } from './slices/channelsInfoSlice.js';
-import { Provider } from 'react-redux';
 import App from './components/App.jsx';
-import leoProfanity from "leo-profanity";
 
 const init = async (socketClient = io()) => {
   const i18nInstance = i18n.createInstance();
@@ -20,11 +20,11 @@ const init = async (socketClient = io()) => {
   leoProfanity.add(ruDict);
 
   await i18nInstance
-  .use(initReactI18next)
-  .init({
-    resources,
-    lng: lng,
-  });
+    .use(initReactI18next)
+    .init({
+      resources,
+      lng,
+    });
 
   const socket = socketClient;
 
@@ -48,7 +48,7 @@ const init = async (socketClient = io()) => {
     <Provider store={store}>
       <App socket={socket} />
     </Provider>
-  )
-}
+  );
+};
 
 export default init;

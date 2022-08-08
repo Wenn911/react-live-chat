@@ -5,18 +5,18 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
-import AuthProvider from '../contexts/AuthProvider'
-import { socketContext } from '../contexts/';
+import { ToastContainer as Toaster } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import AuthProvider from '../contexts/AuthProvider';
+import { socketContext } from '../contexts';
 import Chat from './Chat.jsx';
 import LoginForm from './LoginForm.jsx';
 import PageNotFound from './PageNotFound.jsx';
-import { useAuth } from '../hooks/';
+import { useAuth } from '../hooks';
 import SignUp from './SignUp';
-import AppNavbar from "./AppNavbar";
-import { ToastContainer as Toaster } from "react-toastify";
+import AppNavbar from './AppNavbar';
 import getModal from './modals/index';
-import {useDispatch, useSelector} from "react-redux";
-import {closeModal} from "../slices/modalSlice";
+import { closeModal } from '../slices/modalSlice';
 
 const renderModal = (type, onExited) => {
   if (!type) {
@@ -28,8 +28,7 @@ const renderModal = (type, onExited) => {
   return <Modal onExited={onExited} />;
 };
 
-
-const PrivateRoute = ({ children, exact, path }) => {
+function PrivateRoute({ children, exact, path }) {
   const { loggedIn } = useAuth();
 
   return (
@@ -37,15 +36,15 @@ const PrivateRoute = ({ children, exact, path }) => {
       {loggedIn ? children : <Redirect to="/login" />}
     </Route>
   );
-};
+}
 
-const App = ({ socket }) => {
+function App({ socket }) {
   const { type } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
   const onModalExited = () => {
     dispatch(closeModal());
-  }
+  };
 
   return (
     <AuthProvider>
@@ -70,19 +69,20 @@ const App = ({ socket }) => {
           </div>
           {renderModal(type, onModalExited)}
           <Toaster
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover/>
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </Router>
       </socketContext.Provider>
     </AuthProvider>
   );
-};
+}
 
 export default App;

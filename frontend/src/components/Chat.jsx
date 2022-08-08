@@ -5,12 +5,12 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
 import routes from '../routes.js';
 import { setInitialState } from '../slices/channelsInfoSlice.js';
-import { useAuth, useSocket } from '../hooks/';
+import { useAuth, useSocket } from '../hooks';
 import Channels from './Channels';
 import Messages from './Messages';
-import {toast} from "react-toastify";
 
 const getToken = () => localStorage.getItem('token');
 
@@ -24,7 +24,7 @@ const getAuthorizationHeader = () => {
   return {};
 };
 
-const Chat = () => {
+function Chat() {
   const auth = useAuth();
   const dispatch = useDispatch();
   const socket = useSocket();
@@ -53,9 +53,9 @@ const Chat = () => {
           return;
         }
         if (!e.isAxiosError) {
-          toast.error(t('errors.unknown'))
+          toast.error(t('errors.unknown'));
         } else {
-          toast.error(t('errors.networkErr'))
+          toast.error(t('errors.networkErr'));
         }
 
         throw e;
@@ -84,6 +84,6 @@ const Chat = () => {
       </Col>
     </Row>
   );
-};
+}
 
 export default Chat;

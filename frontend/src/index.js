@@ -9,4 +9,4 @@ const render = async () => {
   root.render(vdom);
 };
 
-render()
+render();
