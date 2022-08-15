@@ -56,12 +56,12 @@ const ChatApiProvider = ({ socket, children }) => {
   };
 
   return (
-  <apiContext.Provider value={{
-    newMessage, newChannel, deleteChannel, reNameChannel,
-  }}
-  >
-    { children }
-  </apiContext.Provider>
+    <apiContext.Provider value={{
+      newMessage, newChannel, deleteChannel, reNameChannel,
+    }}
+    >
+      { children }
+    </apiContext.Provider>
   );
 };
 
