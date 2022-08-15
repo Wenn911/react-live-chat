@@ -10,8 +10,8 @@ import { useFormik } from 'formik';
 
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
+import * as yup from 'yup';
 import { useApi } from '../../hooks';
-import * as yup from "yup";
 
 function AddChannelForm({ onHide }) {
   const { t } = useTranslation();
@@ -20,10 +20,10 @@ function AddChannelForm({ onHide }) {
   const nameRef = useRef();
   const channelSchema = yup.object().shape({
     name: yup.string()
-        .trim()
-        .required('errors.emptyField')
-        .min(3, 'errors.notInRange')
-        .max(20, 'errors.notInRange'),
+      .trim()
+      .required('errors.emptyField')
+      .min(3, 'errors.notInRange')
+      .max(20, 'errors.notInRange'),
   });
 
   const formik = useFormik({
@@ -39,9 +39,8 @@ function AddChannelForm({ onHide }) {
       const handleSubmitted = () => {
         toast.success(t('channels.created'));
         onHide();
-      }
-
-      newChannel(channel, handleSubmitted)
+      };
+      newChannel(channel, handleSubmitted);
     },
   });
 

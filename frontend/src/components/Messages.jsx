@@ -11,8 +11,9 @@ import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { animateScroll } from 'react-scroll';
 import leoProfanity from 'leo-profanity';
+import * as yup from 'yup';
 import { useApi } from '../hooks';
-import * as yup from "yup";
+
 
 const getUsername = () => localStorage.getItem('username');
 
@@ -87,8 +88,8 @@ function NewMessageForm() {
 
         resetForm();
         inputRef.current.focus();
-      }
-      newMessage(message, handleSubmitted)
+      };
+      newMessage(message, handleSubmitted);
     },
   });
 

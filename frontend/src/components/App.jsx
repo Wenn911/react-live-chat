@@ -16,8 +16,8 @@ import SignUp from './SignUp';
 import AppNavbar from './AppNavbar';
 import getModal from './modals/index';
 import { closeModal } from '../slices/modalSlice';
-import ChatApiProvider from "../contexts/ChatApiProvider";
-import routes from "../routes";
+import ChatApiProvider from '../contexts/ChatApiProvider';
+import routes from '../routes';
 
 const renderModal = (type, onExited) => {
   if (!type) {
@@ -39,7 +39,7 @@ function PrivateRoute({ children, exact, path }) {
   );
 }
 
-function App({socket}) {
+function App({ socket }) {
   const { type } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 

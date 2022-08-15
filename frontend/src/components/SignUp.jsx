@@ -8,10 +8,10 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 import { useAuth } from '../hooks';
 import routes from '../routes';
 import FormContainer from './FormContainer';
-import * as yup from "yup";
 
 function SignUp() {
   const [signUpError, setSignUpError] = useState(null);
@@ -22,15 +22,15 @@ function SignUp() {
 
   const signUpSchema = yup.object().shape({
     username: yup.string()
-        .trim()
-        .min(3, 'errors.notInRange')
-        .max(20, 'errors.notInRange'),
+      .trim()
+      .min(3, 'errors.notInRange')
+      .max(20, 'errors.notInRange'),
     password: yup.string()
-        .min(6, 'errors.passwordTooShort'),
+      .min(6, 'errors.passwordTooShort'),
     confirmPassword: yup.string()
-        .oneOf([
-          yup.ref('password'),
-        ], 'errors.passwordsDontMatch'),
+      .oneOf([
+        yup.ref('password'),
+      ], 'errors.passwordsDontMatch'),
   });
 
   const formik = useFormik({

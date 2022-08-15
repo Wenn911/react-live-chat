@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
+import * as yup from 'yup';
 import { useApi } from '../../hooks';
-import * as yup from "yup";
 
 function RenameChannelForm({ onHide }) {
   const { channelId, name } = useSelector((state) => state.modal.extra);
@@ -19,10 +19,10 @@ function RenameChannelForm({ onHide }) {
 
   const channelSchema = yup.object().shape({
     name: yup.string()
-        .trim()
-        .required('errors.emptyField')
-        .min(3, 'errors.notInRange')
-        .max(20, 'errors.notInRange'),
+      .trim()
+      .required('errors.emptyField')
+      .min(3, 'errors.notInRange')
+      .max(20, 'errors.notInRange'),
   });
 
   const formik = useFormik({
@@ -39,9 +39,8 @@ function RenameChannelForm({ onHide }) {
       const handleSubmitted = () => {
         toast.success(t('channels.renamed'));
         onHide();
-      }
-
-      reNameChannel(channel, handleSubmitted)
+      };
+      reNameChannel(channel, handleSubmitted);
     },
   });
 

@@ -25,8 +25,8 @@ function RemoveChannel({ onExited }) {
     const handleSubmitted = () => {
       toast.success(t('channels.removed'));
       onHide();
-    }
-    deleteChannel(channel, handleSubmitted)
+    };
+    deleteChannel(channel, handleSubmitted);
   };
 
   return (
