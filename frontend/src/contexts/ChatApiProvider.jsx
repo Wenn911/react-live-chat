@@ -23,7 +23,6 @@ const ChatApiProvider = ({ socket, children }) => {
     });
   }, [socket]);
 
-
   const newChannel = (channel, cb) => {
     socket.emit('newChannel', channel, ({ status }) => {
       if (status === 'ok') {
@@ -58,11 +57,11 @@ const ChatApiProvider = ({ socket, children }) => {
 
   return (
       <apiContext.Provider value={{
-          newMessage, newChannel, deleteChannel, reNameChannel,
-      }}
+        newMessage, newChannel, deleteChannel, reNameChannel,
+    }}
       >
           { children }
-      </apiContext.Provider>
+    </apiContext.Provider>
   );
 };
 
