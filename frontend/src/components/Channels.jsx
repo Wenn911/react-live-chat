@@ -39,7 +39,7 @@ function RemovableChannel({
         as={Button}
         variant={buttonVariant}
         onClick={onClick}
-        className="text-start flex-grow-1"
+        className="text-start flex-grow-1 overflow-hidden"
       >
         {`# ${name}`}
       </Nav.Link>

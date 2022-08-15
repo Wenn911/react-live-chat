@@ -8,8 +8,6 @@ import { Provider } from 'react-redux';
 import leoProfanity from 'leo-profanity';
 import resources from './locales/resources.js';
 import store from './store.js';
-import { addMessage } from './slices/messagesInfoSlice.js';
-import { addChannel, removeChannel, renameChannel } from './slices/channelsInfoSlice.js';
 import App from './components/App.jsx';
 
 const init = async (socketClient = io()) => {
@@ -26,27 +24,9 @@ const init = async (socketClient = io()) => {
       lng,
     });
 
-  const socket = socketClient;
-
-  socket.on('newMessage', (message) => {
-    store.dispatch(addMessage({ message }));
-  });
-
-  socket.on('newChannel', (channel) => {
-    store.dispatch(addChannel({ channel }));
-  });
-
-  socket.on('removeChannel', ({ id }) => {
-    store.dispatch(removeChannel({ id }));
-  });
-
-  socket.on('renameChannel', ({ id, name }) => {
-    store.dispatch(renameChannel({ id, name }));
-  });
-
   return (
     <Provider store={store}>
-      <App socket={socket} />
+      <App socket={socketClient} />
     </Provider>
   );
 };

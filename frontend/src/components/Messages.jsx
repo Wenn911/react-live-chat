@@ -9,10 +9,10 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
-
+import { animateScroll } from 'react-scroll';
 import leoProfanity from 'leo-profanity';
-import { useSocket } from '../hooks';
-import { messageSchema } from '../validations.jsx';
+import { useApi } from '../hooks';
+import * as yup from "yup";
 
 const getUsername = () => localStorage.getItem('username');
 
@@ -41,6 +41,10 @@ function MessagesBox() {
   const { currentChannelId } = useSelector((state) => state.channelsInfo);
   const { messages } = useSelector((state) => state.messagesInfo);
 
+  useEffect(() => {
+    animateScroll.scrollToBottom({ containerId: 'messages-box', delay: 0, duration: 0 });
+  }, [messages.length]);
+
   return (
     <div id="messages-box" className="chat-messages overflow-auto px-5">
       {messages
@@ -62,7 +66,11 @@ function MessagesBox() {
 function NewMessageForm() {
   const { currentChannelId } = useSelector((state) => state.channelsInfo);
   const inputRef = useRef();
-  const socket = useSocket();
+  const { newMessage } = useApi();
+
+  const messageSchema = yup.object().shape({
+    body: yup.string().trim().required('errors.emptyField'),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -72,16 +80,15 @@ function NewMessageForm() {
     onSubmit: ({ body }, { resetForm, setSubmitting }) => {
       setSubmitting(true);
       const filteredBody = leoProfanity.clean(body);
-
       const message = { body: filteredBody, channelId: currentChannelId, username: getUsername() };
-      socket.emit('newMessage', message, ({ status }) => {
-        if (status === 'ok') {
-          setSubmitting(false);
 
-          resetForm();
-          inputRef.current.focus();
-        }
-      });
+      const handleSubmitted = () => {
+        setSubmitting(false);
+
+        resetForm();
+        inputRef.current.focus();
+      }
+      newMessage(message, handleSubmitted)
     },
   });
 

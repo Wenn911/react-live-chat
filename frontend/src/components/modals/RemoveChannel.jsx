@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { toast } from 'react-toastify';
-import { useSocket } from '../../hooks';
+import { useApi } from '../../hooks';
 
 function RemoveChannel({ onExited }) {
   const [show, setShow] = useState(true);
   const [pending, setPending] = useState(false);
   const { t } = useTranslation();
   const { channelId } = useSelector((state) => state.modal.extra);
-  const socket = useSocket();
+  const { deleteChannel } = useApi();
 
   const onHide = () => {
     setShow(false);
@@ -22,12 +22,11 @@ function RemoveChannel({ onExited }) {
 
     const channel = { id: channelId };
 
-    socket.emit('removeChannel', channel, ({ status }) => {
-      if (status === 'ok') {
-        toast.success(t('channels.removed'));
-        onHide();
-      }
-    });
+    const handleSubmitted = () => {
+      toast.success(t('channels.removed'));
+      onHide();
+    }
+    deleteChannel(channel, handleSubmitted)
   };
 
   return (

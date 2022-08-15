@@ -8,7 +8,6 @@ import {
 import { ToastContainer as Toaster } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthProvider from '../contexts/AuthProvider';
-import { socketContext } from '../contexts';
 import Chat from './Chat.jsx';
 import LoginForm from './LoginForm.jsx';
 import PageNotFound from './PageNotFound.jsx';
@@ -17,6 +16,8 @@ import SignUp from './SignUp';
 import AppNavbar from './AppNavbar';
 import getModal from './modals/index';
 import { closeModal } from '../slices/modalSlice';
+import ChatApiProvider from "../contexts/ChatApiProvider";
+import routes from "../routes";
 
 const renderModal = (type, onExited) => {
   if (!type) {
@@ -33,12 +34,12 @@ function PrivateRoute({ children, exact, path }) {
 
   return (
     <Route exact={exact} path={path}>
-      {loggedIn ? children : <Redirect to="/login" />}
+      {loggedIn ? children : <Redirect to={routes.loginPage()} />}
     </Route>
   );
 }
 
-function App({ socket }) {
+function App({socket}) {
   const { type } = useSelector((state) => state.modal);
   const dispatch = useDispatch();
 
@@ -48,21 +49,21 @@ function App({ socket }) {
 
   return (
     <AuthProvider>
-      <socketContext.Provider value={socket}>
+      <ChatApiProvider socket={socket}>
         <Router>
           <div className="d-flex flex-column h-100">
             <AppNavbar />
             <Switch>
-              <PrivateRoute exact path="/">
+              <PrivateRoute exact path={routes.homePage()}>
                 <Chat />
               </PrivateRoute>
-              <Route path="/login">
+              <Route path={routes.loginPage()}>
                 <LoginForm />
               </Route>
-              <Route path="/signup">
+              <Route path={routes.signupPage()}>
                 <SignUp />
               </Route>
-              <Route path="*">
+              <Route path={routes.notFoundPage()}>
                 <PageNotFound />
               </Route>
             </Switch>
@@ -80,7 +81,7 @@ function App({ socket }) {
             pauseOnHover
           />
         </Router>
-      </socketContext.Provider>
+      </ChatApiProvider>
     </AuthProvider>
   );
 }

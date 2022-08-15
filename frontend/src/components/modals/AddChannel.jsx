@@ -10,14 +10,21 @@ import { useFormik } from 'formik';
 
 import { toast } from 'react-toastify';
 import leoProfanity from 'leo-profanity';
-import { useSocket } from '../../hooks';
-import { channelSchema } from '../../validations.jsx';
+import { useApi } from '../../hooks';
+import * as yup from "yup";
 
 function AddChannelForm({ onHide }) {
   const { t } = useTranslation();
-  const socket = useSocket();
+  const { newChannel } = useApi();
 
   const nameRef = useRef();
+  const channelSchema = yup.object().shape({
+    name: yup.string()
+        .trim()
+        .required('errors.emptyField')
+        .min(3, 'errors.notInRange')
+        .max(20, 'errors.notInRange'),
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -29,13 +36,12 @@ function AddChannelForm({ onHide }) {
       setSubmitting(true);
 
       const channel = { name: filteredName };
+      const handleSubmitted = () => {
+        toast.success(t('channels.created'));
+        onHide();
+      }
 
-      socket.emit('newChannel', channel, ({ status }) => {
-        if (status === 'ok') {
-          toast.success(t('channels.created'));
-          onHide();
-        }
-      });
+      newChannel(channel, handleSubmitted)
     },
   });
 

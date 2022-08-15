@@ -8,26 +8,14 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import routes from '../routes.js';
 import { setInitialState } from '../slices/channelsInfoSlice.js';
-import { useAuth, useSocket } from '../hooks';
+import { useAuth, useApi } from '../hooks';
 import Channels from './Channels';
 import Messages from './Messages';
-
-const getToken = () => localStorage.getItem('token');
-
-const getAuthorizationHeader = () => {
-  const token = getToken();
-
-  if (token) {
-    return { Authorization: `Bearer ${token}` };
-  }
-
-  return {};
-};
 
 function Chat() {
   const auth = useAuth();
   const dispatch = useDispatch();
-  const socket = useSocket();
+  const api = useApi();
   const { t } = useTranslation();
 
   const [contentLoaded, setContentLoaded] = useState(false);
@@ -39,11 +27,11 @@ function Chat() {
     const fetchData = async () => {
       const url = routes.data();
       try {
-        const res = await axios.get(url, { headers: getAuthorizationHeader() });
+        const res = await axios.get(url, { headers: auth.getAuthorizationHeader() });
 
         dispatch(setInitialState(res.data));
 
-        socket.auth = { token: getToken() };
+        api.auth = { token: auth.getToken() };
 
         if (mounted) {
           setContentLoaded(true);
