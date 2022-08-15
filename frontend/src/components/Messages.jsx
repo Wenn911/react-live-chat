@@ -14,7 +14,6 @@ import leoProfanity from 'leo-profanity';
 import * as yup from 'yup';
 import { useApi } from '../hooks';
 
-
 const getUsername = () => localStorage.getItem('username');
 
 function InfoDivBlock() {

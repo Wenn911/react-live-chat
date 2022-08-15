@@ -31,8 +31,9 @@ function AuthProvider({ children }) {
 
   return (
     <authContext.Provider value={{
-      loggedIn, logIn, logOut, getAuthorizationHeader, getToken
-    }}>
+      loggedIn, logIn, logOut, getAuthorizationHeader, getToken,
+    }}
+    >
       {children}
     </authContext.Provider>
   );
